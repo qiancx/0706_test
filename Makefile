@@ -31,7 +31,7 @@ $(main):main.o make_log.o
 	$(CC) $^ -o $@
 
 
-
+hello
 
 #clean指令
 
