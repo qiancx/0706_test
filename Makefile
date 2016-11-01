@@ -32,6 +32,8 @@ $(main):main.o make_log.o
 
 
 hello
+world
+
 
 #clean指令
 
