@@ -1,8 +1,8 @@
-#hello
-CC=gcc
-CPPFLAGS=-I./include 
-CFLAGS=-Wall 
 
+CC=gcc
+CPPFLAGS=-I./include -I/usr/local/include/hiredis 
+CFLAGS=-Wall 
+LIBS=-lhiredis
 
 #找到当前目录下所有的.c文件
 src = $(wildcard *.c)
@@ -12,9 +12,9 @@ obj = $(patsubst %.c, %.o, $(src))
 
 
 test_fdfs_client=./test/fdfs_client_test
-main=main_test
-
-target=$(test_fdfs_client)$(main)
+aa=./test1/a
+redis_test=./test/redis_test
+target=$(test_fdfs_client) $(aa) $(redis_test)
 
 
 ALL:$(target)
@@ -27,17 +27,19 @@ $(obj):%.o:%.c
 
 $(test_fdfs_client):./test/fdfs_client_test.o make_log.o
 	$(CC) $^ -o $@
-$(main):main.o make_log.o
+$(aa):./test1/a.o 
 	$(CC) $^ -o $@
 
+$(redis_test):./test/redis_test.o make_log.o redis_op.o 
+	$(CC) $^ -o $@ $(LIBS)
 
 #clean指令
 
 clean:
-	-rm -rf $(obj) $(target) ./test/*.o
+	-rm -rf $(obj) $(target) ./test/*.o ./test1/*.o
 
 distclean:
-	-rm -rf $(obj) $(target) ./test/*.o
+	-rm -rf $(obj) $(target) ./test/*.o ./test1/*.o
 
 #将clean目标 改成一个虚拟符号
 .PHONY: clean ALL distclean
