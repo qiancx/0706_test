@@ -12,9 +12,8 @@ obj = $(patsubst %.c, %.o, $(src))
 
 
 test_fdfs_client=./test/fdfs_client_test
-aa=./test1/a
 redis_test=./test/redis_test
-target=$(test_fdfs_client) $(aa) $(redis_test)
+target=$(test_fdfs_client) $(redis_test)
 
 
 ALL:$(target)
@@ -27,8 +26,6 @@ $(obj):%.o:%.c
 
 $(test_fdfs_client):./test/fdfs_client_test.o make_log.o
 	$(CC) $^ -o $@
-$(aa):./test1/a.o 
-	$(CC) $^ -o $@
 
 $(redis_test):./test/redis_test.o make_log.o redis_op.o 
 	$(CC) $^ -o $@ $(LIBS)
@@ -36,10 +33,10 @@ $(redis_test):./test/redis_test.o make_log.o redis_op.o
 #clean指令
 
 clean:
-	-rm -rf $(obj) $(target) ./test/*.o ./test1/*.o
+	-rm -rf $(obj) $(target) ./test/*.o 
 
 distclean:
-	-rm -rf $(obj) $(target) ./test/*.o ./test1/*.o
+	-rm -rf $(obj) $(target) ./test/*.o 
 
 #将clean目标 改成一个虚拟符号
 .PHONY: clean ALL distclean
